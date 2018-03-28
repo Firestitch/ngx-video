@@ -20,10 +20,10 @@ import { FsComponentService } from './services/fs-component.service';
     FsComponentService,
   ],
 })
-export class FsComponentModule {
+export class FsVideoModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: FsComponentModule,
+      ngModule: FsVideoModule,
       providers: [FsComponentService]
     };
   }

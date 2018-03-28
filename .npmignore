@@ -33,5 +33,6 @@ Desktop.ini
 build/*
 dll/
 playground/
-
-
+tools/
+.editorconfig
+.gitmodules

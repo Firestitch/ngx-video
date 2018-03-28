@@ -1,10 +1,10 @@
 {
-  "name": "@firestitch/component-boilerplate",
-  "description": "@firestitch/component-boilerplate",
+  "name": "@firestitch/video",
+  "description": "@firestitch/video",
   "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Firestitch/component-boilerplate"
+    "url": "https://github.com/Firestitch/fs-video"
   },
   "author": {
     "name": "Firestitch",
@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Firestitch/component-boilerplate/issues"
+    "url": "https://github.com/Firestitch/fs-video/issues"
   },
   "main": "package/index.js",
   "typings": "package/index.d.ts",
@@ -42,21 +42,21 @@
     "compodoc": "./node_modules/.bin/compodoc src --disableInternal --disablePrivate --disableGraph --disableSourceCode --hideGenerator --output docs --tsconfig tsconfig.compodoc.json"
   },
   "devDependencies": {
-    "@angular/animations": "^5.2.4",
-    "@angular/cdk": "^5.2.0",
-    "@angular/common": "^5.2.4",
-    "@angular/compiler": "^5.2.4",
-    "@angular/compiler-cli": "^5.2.4",
-    "@angular/core": "^5.2.4",
+    "@angular/animations": "^5.2.9",
+    "@angular/cdk": "^5.2.4",
+    "@angular/common": "^5.2.9",
+    "@angular/compiler": "^5.2.9",
+    "@angular/compiler-cli": "^5.2.9",
+    "@angular/core": "^5.2.9",
     "@angular/flex-layout": "2.0.0-beta.10-4905443",
-    "@angular/forms": "^5.2.4",
-    "@angular/http": "^5.2.4",
-    "@angular/material": "^5.2.0",
-    "@angular/platform-browser": "^5.2.4",
-    "@angular/platform-browser-dynamic": "^5.2.4",
+    "@angular/forms": "^5.2.9",
+    "@angular/http": "^5.2.9",
+    "@angular/material": "^5.2.4",
+    "@angular/platform-browser": "^5.2.9",
+    "@angular/platform-browser-dynamic": "^5.2.9",
     "@compodoc/compodoc": "^1.0.5",
-    "@firestitch/common": "^0.1.22",
-    "@firestitch/example": "^0.1.7",
+    "@firestitch/common": "^0.2.11",
+    "@firestitch/example": "^0.1.8",
     "@types/googlemaps": "^3.30.2",
     "@types/jasmine": "2.5.53",
     "@types/node": "^6.0.99",
@@ -75,23 +75,10 @@
     "del": "^2.2.2",
     "directory-tree-webpack-plugin": "^0.2.0",
     "extract-text-webpack-plugin": "^3.0.2",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.0",
-    "gulp-regex-rename": "^0.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.6.1",
-    "gulp-rollup": "^2.15.0",
     "html-webpack-plugin": "^2.30.1",
     "inquirer": "^4.0.1",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
-    "karma": "~1.7.0",
-    "karma-chrome-launcher": "~2.1.1",
-    "karma-cli": "~1.0.1",
-    "karma-coverage-istanbul-reporter": "^1.2.1",
-    "karma-jasmine": "^1.1.1",
-    "karma-jasmine-html-reporter": "^0.2.2",
-    "lite-server": "^2.3.0",
     "node-sass": "^4.5.2",
     "node-sass-tilde-importer": "^1.0.0",
     "node-watch": "^0.5.7",
@@ -113,7 +100,6 @@
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "~2.4.2",
-    "ucfirst": "^1.0.0",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.0",
     "webpack-dll-bundles-plugin": "^1.0.0-beta.5",
@@ -126,11 +112,11 @@
     "node": ">=6.0.0"
   },
   "peerDependencies": {
-    "@angular/core": "^4.0.0",
+    "@angular/core": "^5.2.9",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },
   "dependencies": {
-    "tsmodels": "^0.2.7"
+    "tsmodels": "^0.4.1"
   }
 }
