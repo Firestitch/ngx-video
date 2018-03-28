@@ -1,0 +1,59 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons|Roboto);
+
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    margin: 0;
+}
+
+app-root {
+  padding: 30px;
+  box-sizing: border-box;
+  height: 100%;
+  display: block;
+}
+
+fs-examples {
+  display: block;
+}
+
+fs-example {
+  padding: 20px 0;
+  display: block;
+}
+
+.examples-body {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+fs-example:first-of-type {
+  padding-bottom: 0px;
+}
+
+iframe.iframe-example {
+  width: 100%;
+  border: 0px;
+  height: 3000px;
+  width: 100%;
+}
+
+
+fieldset {
+  margin: 0;
+  margin-top: 20px;
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  padding: 16px;
+
+  legend {}
+}
+
+.example-title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 22px;
+}
