@@ -1,30 +1,31 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FsComponentComponent } from './components/fs-component/fs-component.component';
-import { FsComponentService } from './services/fs-component.service';
+import { FsVideoComponent } from './components';
+import { VideoService } from './services';
+
 
 @NgModule({
   imports: [
     CommonModule,
   ],
   exports: [
-    FsComponentComponent,
+    FsVideoComponent,
   ],
   entryComponents: [
   ],
   declarations: [
-    FsComponentComponent,
+    FsVideoComponent,
   ],
   providers: [
-    FsComponentService,
+    VideoService
   ],
 })
 export class FsVideoModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: FsVideoModule,
-      providers: [FsComponentService]
+      providers: []
     };
   }
 }
