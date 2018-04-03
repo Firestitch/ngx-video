@@ -1,10 +1,14 @@
 import { AfterContentInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { VideoService } from '../../services';
 import { FsVideoConfig } from '../../interfaces';
+import { Observable } from 'rxjs/Observable';
+// import { DOM } from 'rxjs/observable/dom';
+import {fromEvent} from 'rxjs/observable/fromEvent';
 
 @Component({
   selector: 'fs-video',
   templateUrl: 'fs-video.component.html',
+  styleUrls: [ 'fs-video.component.scss' ]
 })
 export class FsVideoComponent implements OnInit, AfterContentInit, OnDestroy {
 
@@ -12,7 +16,9 @@ export class FsVideoComponent implements OnInit, AfterContentInit, OnDestroy {
 
   @ViewChild('video') public videoTag: ElementRef;
 
-  constructor(private _video: VideoService) {
+  public buffers = [];
+
+  constructor(private _el: ElementRef, private _video: VideoService) {
   }
 
   get width() {
@@ -32,7 +38,7 @@ export class FsVideoComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   public ngAfterContentInit() {
-    this._video.initPlayer(this.videoTag);
+    this._video.initPlayer(this._el, this.videoTag);
   }
 
   public ngOnDestroy() {

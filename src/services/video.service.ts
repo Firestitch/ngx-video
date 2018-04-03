@@ -5,6 +5,7 @@ import * as Hls from 'hls.js';
 
 import { VideoConfig } from '../models/video-config.model';
 import { FsVideoConfig } from '../interfaces';
+import { Scales } from '../classes';
 
 
 @Injectable()
@@ -12,6 +13,8 @@ export class VideoService {
 
   public targetTag: ElementRef;
   public config: VideoConfig;
+
+  public scales: Scales;
 
   private _hls: Hls;
 
@@ -23,15 +26,22 @@ export class VideoService {
     this._hls = new Hls(this.config.hlsConfig);
   }
 
-  public initPlayer(targetTag) {
-    this.targetTag = targetTag;
+  public initPlayer(containerElemet, targetElement) {
+    this.targetTag = targetElement;
 
     if (Hls.isSupported()) {
       this._hls.loadSource(this.config.source);
       this._hls.attachMedia(this.targetTag.nativeElement);
-      this._hls.on(Hls.Events.MANIFEST_PARSED, this.onManifestParsed.bind(this));
-      this._hls.on(Hls.Events.ERROR, this.onError.bind(this))
 
+      ///
+      this.scales = new Scales(this._hls, containerElemet.nativeElement, this.targetTag.nativeElement);
+      ///
+
+      this._hls.on(Hls.Events.MANIFEST_PARSED, this.onManifestParsed.bind(this));
+      this._hls.on(Hls.Events.ERROR, this.onError.bind(this));
+      // this._hls.on(Hls.Events.LEVEL_LOADED, (event, data) => {
+      //   console.log(data);
+      // })
     } else if (this.targetTag.nativeElement.canPlayType('application/vnd.apple.mpegurl')) {
       this.targetTag.nativeElement.src = this.config.source;
     }

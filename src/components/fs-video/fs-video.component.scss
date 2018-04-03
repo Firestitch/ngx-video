@@ -1,0 +1,69 @@
+.container {
+  display: inline-block;
+  position: relative;
+
+  .controls {
+    background-color: #787878;
+    /* Android 2.3 */
+    background-image: -webkit-repeating-linear-gradient(top,rgb(164, 164, 164) 0%,rgb(76, 76, 76) 100%);
+    /* IE10+ */
+    background-image: repeating-linear-gradient(to bottom,rgb(164, 164, 164) 0%,rgb(76, 76, 76) 100%);
+    background-image: -ms-repeating-linear-gradient(top,rgb(164, 164, 164) 0%,rgb(76, 76, 76) 100%);
+
+
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 30px;
+  }
+}
+
+::ng-deep {
+  .progress {
+    position: relative;
+    height: 100%;
+    margin: 0 10px;
+
+    #total-duration {
+      position: absolute;
+      top: calc(50% - 2.5px);
+      width: 100%;
+      height: 5px;
+      background: rgba(239, 239, 239, 0.4);
+      border-radius: 10px;
+    }
+
+    #play-progress {
+      position: absolute;
+      top: calc(50% - 2.5px);
+      width: 100%;
+      transform: scaleX(0);
+      height: 5px;
+      background: #00b8ff;
+      transform-origin: 0 0;
+    }
+
+    #buffers {
+      position: absolute;
+      width: 100%;
+      top: calc(50% - 2.5px);
+
+      .buffered-part {
+        position: absolute;
+        background: rgba(212, 212, 212, 0.5);
+        height: 5px;
+        top: 0;
+      }
+    }
+
+    #play-current-time {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top: calc(50% - 5px);
+      background: #00b8ff;
+      border-radius: 10px;
+      transform: translateX(-50%);
+    }
+  }
+}
