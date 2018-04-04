@@ -7,23 +7,32 @@ export class Scales {
 
   public buffers: BufferInterval[] = [];
 
+  private _progressContainerElem: HTMLElement;
   private _playCurrentTime: HTMLElement;
   private _playProgressElem: HTMLElement;
   private _buffersContainerElem: HTMLElement;
+  private _totalDurationElem: HTMLElement;
 
   private _duration: number;
   private _time: number;
   private _bufferCheckInterval;
   private _onFragBufferedCallback;
 
+  private changeCurrentTimeByClickListener;
+
   constructor(private _hls: Hls,
               private _container: any,
               private _video: HTMLMediaElement) {
     this._onFragBufferedCallback = this.onFragBuffered.bind(this);
     this.subscribe();
+
+    this._progressContainerElem = this._container.querySelector('#progress');
     this._playCurrentTime = this._container.querySelector('#play-current-time');
     this._playProgressElem = this._container.querySelector('#play-progress');
     this._buffersContainerElem = this._container.querySelector('#buffers');
+    this._totalDurationElem = this._container.querySelector('#total-duration');
+
+    this.events();
   }
 
   public setTime(value: number) {
@@ -37,6 +46,20 @@ export class Scales {
 
   private subscribe() {
     this._hls.on(Hls.Events.FRAG_BUFFERED, this._onFragBufferedCallback)
+  }
+
+  private events() {
+    this.changeCurrentTimeByClickListener = this.changeCurrentTimeByClick.bind(this);
+    this._progressContainerElem.addEventListener('click', this.changeCurrentTimeByClickListener);
+  }
+
+  private changeCurrentTimeByClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const sizes = this._totalDurationElem.getBoundingClientRect();
+
+    const target = (event.clientX - sizes.left) / sizes.width * this._duration;
+    this._video.currentTime = target;
   }
 
   /**
@@ -94,6 +117,10 @@ export class Scales {
 
   public destroy() {
     this._hls.off(Hls.Events.FRAG_BUFFERED, this._onFragBufferedCallback);
+    
+    if (this.changeCurrentTimeByClickListener) {
+      this._progressContainerElem.removeEventListener('click', this.changeCurrentTimeByClickListener);
+    }
   }
 
 }
