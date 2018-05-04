@@ -1,0 +1,14 @@
+@import 'styles/fs-video-progress';
+@import 'styles/fs-video-controls';
+@import 'styles/fs-video-fullscreen';
+
+.container {
+  display: inline-block;
+  position: relative;
+  z-index: 2147483647;
+
+
+  video::-webkit-media-controls, video::-webkit-media-controls-overlay-enclosure {
+    display: none !important;
+  }
+}

@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app/app.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { FsVideoModule } from '../src';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppMaterialModule } from './app/material.module';
 import { FsExampleModule } from '@firestitch/example';
-import { FirstExampleComponent } from './app/components/first-example/first-example.component';
+
+import { FsVideoModule } from '../src';
+import { AppMaterialModule } from './app/material.module';
+import { VideoExampleComponent } from './app/components/video-example/video-example.component';
+
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -24,7 +26,7 @@ import { FirstExampleComponent } from './app/components/first-example/first-exam
   ],
   declarations: [
     AppComponent,
-    FirstExampleComponent
+    VideoExampleComponent,
   ],
   providers: [
   ],
