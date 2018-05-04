@@ -9,7 +9,6 @@ import { FsExampleModule } from '@firestitch/example';
 
 import { FsVideoModule } from '../src';
 import { AppMaterialModule } from './app/material.module';
-import { FsExamplesComponent } from '../tools/components/examples/examples.component';
 import { VideoExampleComponent } from './app/components/video-example/video-example.component';
 
 
@@ -28,7 +27,6 @@ import { VideoExampleComponent } from './app/components/video-example/video-exam
   declarations: [
     AppComponent,
     VideoExampleComponent,
-    FsExamplesComponent
   ],
   providers: [
   ],
