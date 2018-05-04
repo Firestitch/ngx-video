@@ -1,9 +1,7 @@
 import { AfterContentInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { VideoService } from '../../services';
 import { FsVideoConfig } from '../../interfaces';
-import { Observable } from 'rxjs/Observable';
-// import { DOM } from 'rxjs/observable/dom';
-import {fromEvent} from 'rxjs/observable/fromEvent';
+
 
 @Component({
   selector: 'fs-video',

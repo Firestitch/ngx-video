@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FsVideoConfig } from '../../../../src/interfaces';
 
 @Component({
-  selector: 'first-example',
-  templateUrl: 'first-example.component.html'
+  selector: 'video-example',
+  templateUrl: 'video-example.component.html'
 })
-export class FirstExampleComponent implements OnInit {
+export class VideoExampleComponent implements OnInit {
   public config: FsVideoConfig;
 
   public ngOnInit() {

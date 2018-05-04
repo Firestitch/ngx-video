@@ -1,75 +1,14 @@
-$progress-height: 5px;
-$h-progress-height: $progress-height / 2;
-$progress-pointer-height: $progress-height * 2;
+@import 'styles/fs-video-progress';
+@import 'styles/fs-video-controls';
+@import 'styles/fs-video-fullscreen';
 
 .container {
   display: inline-block;
   position: relative;
-
-  .controls {
-    background-color: #787878;
-    /* Android 2.3 */
-    background-image: -webkit-repeating-linear-gradient(top,rgb(164, 164, 164) 0%,rgb(76, 76, 76) 100%);
-    /* IE10+ */
-    background-image: repeating-linear-gradient(to bottom,rgb(164, 164, 164) 0%,rgb(76, 76, 76) 100%);
-    background-image: -ms-repeating-linear-gradient(top,rgb(164, 164, 164) 0%,rgb(76, 76, 76) 100%);
+  z-index: 2147483647;
 
 
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 30px;
-  }
-}
-
-::ng-deep {
-  .progress {
-    position: relative;
-    height: $progress-height;
-    margin: 0 10px;
-    top: calc(50% - #{$h-progress-height});
-
-    #total-duration {
-      position: absolute;
-      top: calc(50% - #{$h-progress-height});
-      width: 100%;
-      height: 100%;
-      background: rgba(239, 239, 239, 0.4);
-      border-radius: 10px;
-    }
-
-    #play-progress {
-      position: absolute;
-      top: calc(50% - #{$h-progress-height});
-      width: 100%;
-      transform: scaleX(0);
-      height: 100%;
-      background: #00b8ff;
-      transform-origin: 0 0;
-    }
-
-    #buffers {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: calc(50% - #{$h-progress-height});
-
-      .buffered-part {
-        position: absolute;
-        background: rgba(212, 212, 212, 0.5);
-        height: 100%;
-        top: 0;
-      }
-    }
-
-    #play-current-time {
-      position: absolute;
-      width: 10px;
-      height: $progress-pointer-height;
-      top: calc(50% - #{$progress-height});
-      background: #00b8ff;
-      border-radius: 10px;
-      transform: translateX(-50%);
-    }
+  video::-webkit-media-controls, video::-webkit-media-controls-overlay-enclosure {
+    display: none !important;
   }
 }
