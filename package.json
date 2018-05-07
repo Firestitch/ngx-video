@@ -55,7 +55,6 @@
     "@angular/platform-browser": "^5.2.9",
     "@angular/platform-browser-dynamic": "^5.2.9",
     "@compodoc/compodoc": "^1.0.5",
-    "@firestitch/common": "^0.2.11",
     "@firestitch/example": "^0.2.1",
     "@firestitch/iframe": "^0.1.5",
     "@types/googlemaps": "^3.30.2",
