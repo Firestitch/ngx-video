@@ -3,32 +3,34 @@ import { fractionOfNumber, scaleX } from '../../helpers';
 
 import { BufferInterval } from './buffer-interval';
 import { VideoService } from '../../services';
+import { secondsHumanize } from '../../helpers/seconds-humanize';
 
 export class Scales {
 
   public buffers: BufferInterval[] = [];
 
   private _progressContainerElem: HTMLElement;
-  private _playCurrentTime: HTMLElement;
   private _playProgressElem: HTMLElement;
   private _buffersContainerElem: HTMLElement;
-  private _totalDurationElem: HTMLElement;
+  private _movingCurrentTimeLabel: HTMLElement;
+  private _durationElem: HTMLInputElement;
 
   private _duration: number;
   private _time: number;
   private _bufferCheckInterval;
   private _onFragBufferedCallback;
 
-  private changeCurrentTimeByClickListener;
+  private changeCurrentTimeByDraggingListener;
+  private changeCurrentTimeByDraggingEndListener;
 
   constructor(private _player: VideoService) {
     this._onFragBufferedCallback = this.onFragBuffered.bind(this);
 
     this._progressContainerElem = this._player.containerTag.querySelector('#progress');
-    this._playCurrentTime = this._player.containerTag.querySelector('#play-current-time');
     this._playProgressElem = this._player.containerTag.querySelector('#play-progress');
     this._buffersContainerElem = this._player.containerTag.querySelector('#buffers');
-    this._totalDurationElem = this._player.containerTag.querySelector('#total-duration');
+    this._movingCurrentTimeLabel = this._player.containerTag.querySelector('#play-current-time-label');
+    this._durationElem = this._player.containerTag.querySelector('#duration-bar input');
 
     this.subscribe();
     this.events();
@@ -40,11 +42,13 @@ export class Scales {
    */
   public setTime(value: number) {
     this._time = value;
-    const scaleTo = fractionOfNumber(this._time, this._duration);
-    const currentTimePos = fractionOfNumber(this._player.videoTag.currentTime, this._duration) * 100;
 
+    const scaleTo = fractionOfNumber(this._time, this._duration);
     this._playProgressElem.setAttribute('style', scaleX(scaleTo));
-    this._playCurrentTime.style.left = `${currentTimePos || 0}%`;
+
+    const currentTimePos = fractionOfNumber(this._player.videoTag.currentTime, this._duration) * 100;
+    this._durationElem.value = String(currentTimePos);
+
     this._player.updateCurrentTime();
   }
 
@@ -59,21 +63,47 @@ export class Scales {
    * Subscribe to video tag events
    */
   private events() {
-    this.changeCurrentTimeByClickListener = this.changeCurrentTimeByClick.bind(this);
-    this._progressContainerElem.addEventListener('click', this.changeCurrentTimeByClickListener);
+    this.changeCurrentTimeByDraggingListener = this.changeCurrentTime.bind(this);
+    this.changeCurrentTimeByDraggingEndListener = this.hideTimeLabel.bind(this);
+    this._durationElem.addEventListener('input', this.changeCurrentTimeByDraggingListener);
+    this._durationElem.addEventListener('change', this.changeCurrentTimeByDraggingEndListener);
   }
 
   /**
-   * Changing current time by click event
+   * Changing current time by click event or dragging event
    * @param event
    */
-  private changeCurrentTimeByClick(event) {
+  private changeCurrentTime(event) {
     event.preventDefault();
     event.stopPropagation();
-    const sizes = this._totalDurationElem.getBoundingClientRect();
+    const currentTimePos = +this._durationElem.value;
 
-    const target = (event.clientX - sizes.left) / sizes.width * this._duration;
+    const target = currentTimePos / 100 * this._duration;
     this._player.videoTag.currentTime = target;
+
+    this.showTimeLabel();
+  }
+
+  /**
+   * Show time label above current time point
+   */
+  private showTimeLabel() {
+    const currentTimePos = +this._durationElem.value;
+
+    const pointTimeBound = this._movingCurrentTimeLabel.getBoundingClientRect();
+    const progressBound = this._progressContainerElem.getBoundingClientRect();
+    const halfOfTimeWidth = fractionOfNumber(pointTimeBound.width / 2, progressBound.width) * 100;
+
+    this._movingCurrentTimeLabel.hidden = false;
+    this._movingCurrentTimeLabel.innerText = secondsHumanize(this._player.videoTag.currentTime);
+    this._movingCurrentTimeLabel.style.left = `${ currentTimePos - halfOfTimeWidth / 2 }%`;
+  }
+
+  /**
+   * Hide time label above current time point
+   */
+  private hideTimeLabel() {
+    this._movingCurrentTimeLabel.hidden = true;
   }
 
   /**
@@ -135,8 +165,9 @@ export class Scales {
   public destroy() {
     this._player.hls.off(Hls.Events.FRAG_BUFFERED, this._onFragBufferedCallback);
 
-    if (this.changeCurrentTimeByClickListener) {
-      this._progressContainerElem.removeEventListener('click', this.changeCurrentTimeByClickListener);
+    if (this.changeCurrentTimeByDraggingListener && this.changeCurrentTimeByDraggingEndListener) {
+      this._durationElem.removeEventListener('input', this.changeCurrentTimeByDraggingListener);
+      this._durationElem.removeEventListener('change', this.changeCurrentTimeByDraggingEndListener);
     }
   }
 

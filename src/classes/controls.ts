@@ -11,6 +11,9 @@ export class Controls {
   private _fullscreenOn: HTMLElement;
   private _fullscreenOff: HTMLElement;
 
+  private _overlayPauseLayout: HTMLElement;
+  private _overlayPauseButton: HTMLElement;
+
   // Handlers
   private _onPlayHandler: EventListener;
   private _onPauseHandler: EventListener;
@@ -27,6 +30,9 @@ export class Controls {
     this._unmuteButton  = this._player.containerTag.querySelector('#unmute');
     this._fullscreenOn  = this._player.containerTag.querySelector('#full-screen-on');
     this._fullscreenOff = this._player.containerTag.querySelector('#full-screen-off');
+
+    this._overlayPauseLayout = this._player.containerTag.querySelector('#overlay');
+    this._overlayPauseButton = this._player.containerTag.querySelector('#overlay .pause');
 
     this.events();
   }
@@ -48,6 +54,7 @@ export class Controls {
     this._unmuteButton.addEventListener('click', this._switchMuteHandler);
     this._fullscreenOn.addEventListener('click', this._switchFullscreenHandler);
     this._fullscreenOff.addEventListener('click', this._switchFullscreenHandler);
+    this._overlayPauseButton.addEventListener('click', this._onPlayHandler);
 
     // Full screen
     this._player.containerTag.addEventListener(FullscreenApi.fullscreenchange, this._fullscreenChangeHandler);
@@ -61,6 +68,7 @@ export class Controls {
     this._pauseButton.classList.remove('hidden');
     this._player.videoTag.play();
     this._player.playing = true;
+    this.hideOverlayPauseLayout();
   }
 
   /**
@@ -71,6 +79,7 @@ export class Controls {
     this._pauseButton.classList.add('hidden');
     this._player.videoTag.pause();
     this._player.playing = false;
+    this.showOverlayPauseLayout();
   }
 
   /**
@@ -133,6 +142,20 @@ export class Controls {
   }
 
   /**
+   * Show overlay layout with pause icon
+   */
+  private showOverlayPauseLayout() {
+    this._overlayPauseLayout.classList.remove('hidden');
+  }
+
+  /**
+   * Hide overlay layout with pause icon
+   */
+  private hideOverlayPauseLayout() {
+    this._overlayPauseLayout.classList.add('hidden');
+  }
+
+  /**
    * Destroy everything
    */
   public destroy() {
@@ -142,6 +165,7 @@ export class Controls {
     this._unmuteButton.removeEventListener('click', this._switchMuteHandler);
     this._fullscreenOn.removeEventListener('click', this._switchFullscreenHandler);
     this._fullscreenOff.removeEventListener('click', this._switchFullscreenHandler);
+    this._overlayPauseButton.removeEventListener('click', this._onPlayHandler);
 
     this._player.containerTag.removeEventListener(FullscreenApi.fullscreenchange, this._fullscreenChangeHandler);
   }
