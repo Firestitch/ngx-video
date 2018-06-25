@@ -32,6 +32,34 @@
       //width: 50%;
       line-height: 25px;
       margin-top: 5px;
+
+      .volume-container {
+        position: absolute;
+        top: -66px;
+        width: 30px;
+        height: 95px;
+        right: 33px;
+        cursor: pointer;
+
+        #volume {
+          transform: rotate(-90deg);
+          width: 65px;
+          left: -19px;
+          top: 35px;
+        }
+
+        #vol-level {
+          position: absolute;
+          width: 65px;
+          transform: scaleX(0) rotate(-90deg);
+          height: $progress-height;
+          background: #fff;
+          transform-origin: 0 0;
+          left: 13px;
+          top: 71px;
+          border-radius: 10px;
+        }
+      }
     }
 
     .time-container {

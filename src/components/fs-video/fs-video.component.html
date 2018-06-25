@@ -29,7 +29,7 @@
       <div id="duration-bar">
         <input type="range" value="0">
       </div>
-      <div id="play-current-time-label" hidden="true">
+      <div id="play-current-time-label" hidden>
         <span> - </span>
       </div>
     </div>
@@ -49,6 +49,10 @@
       <button class="icon-button hidden" id="full-screen-off">
         <svg height="100%" version="1.1" viewBox="0 0 36 36" width="100%"><g><path d="m 14,14 -4,0 0,2 6,0 0,-6 -2,0 0,4 0,0 z"></path></g><g><path d="m 22,14 0,-4 -2,0 0,6 6,0 0,-2 -4,0 0,0 z"></path></g><g><path d="m 20,26 2,0 0,-4 4,0 0,-2 -6,0 0,6 0,0 z"></path></g><g><path d="m 10,22 4,0 0,4 2,0 0,-6 -6,0 0,2 0,0 z"></path></g></svg>
       </button>
+      <div class="volume-container" id="volume-container">
+        <input type="range" id="volume" hidden>
+        <div id="vol-level" hidden></div>
+      </div>
     </div>
   </div>
 </div>

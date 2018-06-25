@@ -1,0 +1,99 @@
+@import './variables';
+$bg: rgba(239, 239, 239, 0.4);
+
+input[type=range] {
+  position: absolute;
+  top: -$progress-height;
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+  margin: 2px 0;
+  height: 2px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-ms-track {
+    width: 100%;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  // webkit
+
+  &::-webkit-slider-runnable-track {
+    width: 100%;
+    height: $progress-height;
+    cursor: pointer;
+    background-color: $bg;
+    border-radius: 10px;
+  }
+
+  &::-webkit-slider-thumb {
+    height: $progress-pointer-height;
+    width: $progress-pointer-height;
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -$progress-height * 2; // for chrome
+  }
+
+  &:focus::-webkit-slider-runnable-track {
+    background: $bg;
+  }
+
+  // moz
+  &::-moz-range-track {
+    width: 100%;
+    height: $progress-height;
+    cursor: pointer;
+    background: $bg;
+    border-radius: 10px;
+  }
+
+  &::-moz-range-thumb {
+    height: $progress-pointer-height;
+    width: $progress-pointer-height;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    border: 1px solid #fff;
+  }
+
+  // ms
+  &::-ms-fill-lower {
+    background: #fff;
+    border-radius: 10px;
+  }
+
+  &::-ms-fill-upper {
+    background: #fff;
+    border-radius: 10px;
+  }
+
+  &::-ms-thumb {
+    height: $progress-pointer-height;
+    width: $progress-pointer-height;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  &:focus::-ms-fill-lower {
+    background: $bg;
+  }
+
+  &:focus::-ms-fill-upper {
+    background: $bg;
+  }
+}
+
+@-moz-document url-prefix() {
+  input[type=range] {
+    top: -3px!important;
+  }
+}

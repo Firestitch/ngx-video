@@ -10,6 +10,9 @@ export class Controls {
   private _unmuteButton: HTMLElement;
   private _fullscreenOn: HTMLElement;
   private _fullscreenOff: HTMLElement;
+  private _volumeContainer: HTMLElement;
+  private _volumeLevel: HTMLElement;
+  private _volume: HTMLInputElement;
 
   private _overlayPauseLayout: HTMLElement;
   private _overlayPauseButton: HTMLElement;
@@ -20,19 +23,27 @@ export class Controls {
   private _switchMuteHandler: EventListener;
   private _switchFullscreenHandler: EventListener;
   private _fullscreenChangeHandler: EventListener;
+  private _volumeChangeHandler: EventListener;
+  private _showVolumeHandler: EventListener;
+  private _hideVolumeHandler: EventListener;
 
 
   constructor(private _player: VideoService) {
 
-    this._playButton    = this._player.containerTag.querySelector('#play');
-    this._pauseButton   = this._player.containerTag.querySelector('#pause');
-    this._muteButton    = this._player.containerTag.querySelector('#mute');
-    this._unmuteButton  = this._player.containerTag.querySelector('#unmute');
-    this._fullscreenOn  = this._player.containerTag.querySelector('#full-screen-on');
-    this._fullscreenOff = this._player.containerTag.querySelector('#full-screen-off');
+    this._playButton      = this._player.containerTag.querySelector('#play');
+    this._pauseButton     = this._player.containerTag.querySelector('#pause');
+    this._muteButton      = this._player.containerTag.querySelector('#mute');
+    this._unmuteButton    = this._player.containerTag.querySelector('#unmute');
+    this._fullscreenOn    = this._player.containerTag.querySelector('#full-screen-on');
+    this._fullscreenOff   = this._player.containerTag.querySelector('#full-screen-off');
+    this._volume          = this._player.containerTag.querySelector('#volume');
+    this._volumeLevel     = this._player.containerTag.querySelector('#vol-level');
+    this._volumeContainer = this._player.containerTag.querySelector('#volume-container');
 
     this._overlayPauseLayout = this._player.containerTag.querySelector('#overlay');
     this._overlayPauseButton = this._player.containerTag.querySelector('#overlay .pause');
+
+    this.changeVolume(); // set default volume level
 
     this.events();
   }
@@ -46,6 +57,9 @@ export class Controls {
     this._switchMuteHandler = this.switchMute.bind(this);
     this._switchFullscreenHandler = this.switchFullscreen.bind(this);
     this._fullscreenChangeHandler = this.fullscreenChangeHandler.bind(this);
+    this._volumeChangeHandler = this.changeVolume.bind(this);
+    this._showVolumeHandler = this.showVolumeScale.bind(this);
+    this._hideVolumeHandler = this.hideVolumeScale.bind(this);
 
     // Other events
     this._playButton.addEventListener('click', this._onPlayHandler);
@@ -55,6 +69,9 @@ export class Controls {
     this._fullscreenOn.addEventListener('click', this._switchFullscreenHandler);
     this._fullscreenOff.addEventListener('click', this._switchFullscreenHandler);
     this._overlayPauseButton.addEventListener('click', this._onPlayHandler);
+    this._volume.addEventListener('input', this._volumeChangeHandler);
+    this._volumeContainer.addEventListener('mouseover', this._showVolumeHandler);
+    this._volumeContainer.addEventListener('mouseout', this._hideVolumeHandler);
 
     // Full screen
     this._player.containerTag.addEventListener(FullscreenApi.fullscreenchange, this._fullscreenChangeHandler);
@@ -141,6 +158,22 @@ export class Controls {
     }
   }
 
+  public changeVolume() {
+    const scaleTo = +this._volume.value / 100;
+    this._player.videoTag.volume = scaleTo;
+    this._volumeLevel.setAttribute('style', `transform: scaleY(${scaleTo}) rotate(-90deg)`);
+  }
+
+  private showVolumeScale() {
+    this._volume.hidden = false;
+    this._volumeLevel.hidden = false;
+  }
+
+  private hideVolumeScale() {
+    this._volume.hidden = true;
+    this._volumeLevel.hidden = true;
+  }
+
   /**
    * Show overlay layout with pause icon
    */
@@ -166,6 +199,9 @@ export class Controls {
     this._fullscreenOn.removeEventListener('click', this._switchFullscreenHandler);
     this._fullscreenOff.removeEventListener('click', this._switchFullscreenHandler);
     this._overlayPauseButton.removeEventListener('click', this._onPlayHandler);
+    this._volumeContainer.removeEventListener('mouseover', this._showVolumeHandler);
+    this._volumeContainer.removeEventListener('mouseout', this._hideVolumeHandler);
+    this._volume.removeEventListener('input', this._volumeChangeHandler);
 
     this._player.containerTag.removeEventListener(FullscreenApi.fullscreenchange, this._fullscreenChangeHandler);
   }
