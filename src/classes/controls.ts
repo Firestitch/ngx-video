@@ -65,6 +65,8 @@ export class Controls {
     this._playButton.addEventListener('click', this._onPlayHandler);
     this._pauseButton.addEventListener('click', this._onPauseHandler);
     this._muteButton.addEventListener('click', this._switchMuteHandler);
+    this._muteButton.addEventListener('mouseover', this._showVolumeHandler);
+    this._muteButton.addEventListener('mouseout', this._hideVolumeHandler);
     this._unmuteButton.addEventListener('click', this._switchMuteHandler);
     this._fullscreenOn.addEventListener('click', this._switchFullscreenHandler);
     this._fullscreenOff.addEventListener('click', this._switchFullscreenHandler);
@@ -108,6 +110,7 @@ export class Controls {
     if (this._player.muted) {
       this._unmuteButton.classList.remove('hidden');
       this._muteButton.classList.add('hidden');
+      this.hideVolumeScale();
     } else {
       this._muteButton.classList.remove('hidden');
       this._unmuteButton.classList.add('hidden');
@@ -165,8 +168,10 @@ export class Controls {
   }
 
   private showVolumeScale() {
-    this._volume.hidden = false;
-    this._volumeLevel.hidden = false;
+    if (!this._player.muted) {
+      this._volume.hidden = false;
+      this._volumeLevel.hidden = false;
+    }
   }
 
   private hideVolumeScale() {
@@ -195,6 +200,8 @@ export class Controls {
     this._playButton.removeEventListener('click', this._onPlayHandler);
     this._pauseButton.removeEventListener('click', this._onPauseHandler);
     this._muteButton.removeEventListener('click', this._switchMuteHandler);
+    this._muteButton.removeEventListener('mouseover', this._showVolumeHandler);
+    this._muteButton.removeEventListener('mouseout', this._hideVolumeHandler);
     this._unmuteButton.removeEventListener('click', this._switchMuteHandler);
     this._fullscreenOn.removeEventListener('click', this._switchFullscreenHandler);
     this._fullscreenOff.removeEventListener('click', this._switchFullscreenHandler);
