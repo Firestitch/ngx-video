@@ -1,9 +1,11 @@
 import { VideoService } from '../services';
+import { NgZone } from '@angular/core';
 import FullscreenApi from '../helpers/fullscreen-events';
 
 
 export class Controls {
 
+  private _controlsContainer: HTMLElement;
   private _playButton: HTMLElement;
   private _pauseButton: HTMLElement;
   private _muteButton: HTMLElement;
@@ -28,17 +30,19 @@ export class Controls {
   private _hideVolumeHandler: EventListener;
 
 
-  constructor(private _player: VideoService) {
+  constructor(private _player: VideoService,
+              private _zone: NgZone) {
 
-    this._playButton      = this._player.containerTag.querySelector('#play');
-    this._pauseButton     = this._player.containerTag.querySelector('#pause');
-    this._muteButton      = this._player.containerTag.querySelector('#mute');
-    this._unmuteButton    = this._player.containerTag.querySelector('#unmute');
-    this._fullscreenOn    = this._player.containerTag.querySelector('#full-screen-on');
-    this._fullscreenOff   = this._player.containerTag.querySelector('#full-screen-off');
-    this._volume          = this._player.containerTag.querySelector('#volume');
-    this._volumeLevel     = this._player.containerTag.querySelector('#vol-level');
-    this._volumeContainer = this._player.containerTag.querySelector('#volume-container');
+    this._playButton        = this._player.containerTag.querySelector('#play');
+    this._pauseButton       = this._player.containerTag.querySelector('#pause');
+    this._muteButton        = this._player.containerTag.querySelector('#mute');
+    this._unmuteButton      = this._player.containerTag.querySelector('#unmute');
+    this._fullscreenOn      = this._player.containerTag.querySelector('#full-screen-on');
+    this._fullscreenOff     = this._player.containerTag.querySelector('#full-screen-off');
+    this._volume            = this._player.containerTag.querySelector('#volume');
+    this._volumeLevel       = this._player.containerTag.querySelector('#vol-level');
+    this._volumeContainer   = this._player.containerTag.querySelector('#volume-container');
+    this._controlsContainer = this._player.containerTag.querySelector('#controls');
 
     this._overlayPauseLayout = this._player.containerTag.querySelector('#overlay');
     this._overlayPauseButton = this._player.containerTag.querySelector('#overlay .pause');
@@ -65,15 +69,18 @@ export class Controls {
     this._playButton.addEventListener('click', this._onPlayHandler);
     this._pauseButton.addEventListener('click', this._onPauseHandler);
     this._muteButton.addEventListener('click', this._switchMuteHandler);
-    this._muteButton.addEventListener('mouseover', this._showVolumeHandler);
-    this._muteButton.addEventListener('mouseout', this._hideVolumeHandler);
     this._unmuteButton.addEventListener('click', this._switchMuteHandler);
     this._fullscreenOn.addEventListener('click', this._switchFullscreenHandler);
     this._fullscreenOff.addEventListener('click', this._switchFullscreenHandler);
     this._overlayPauseButton.addEventListener('click', this._onPlayHandler);
     this._volume.addEventListener('input', this._volumeChangeHandler);
-    this._volumeContainer.addEventListener('mouseover', this._showVolumeHandler);
-    this._volumeContainer.addEventListener('mouseout', this._hideVolumeHandler);
+
+    this._zone.runOutsideAngular(() => {
+      this._muteButton.addEventListener('mouseover', this._showVolumeHandler);
+      this._muteButton.addEventListener('mouseout', this._hideVolumeHandler);
+      this._volumeContainer.addEventListener('mouseover', this._showVolumeHandler);
+      this._volumeContainer.addEventListener('mouseout', this._hideVolumeHandler);
+    });
 
     // Full screen
     this._player.containerTag.addEventListener(FullscreenApi.fullscreenchange, this._fullscreenChangeHandler);
@@ -87,6 +94,7 @@ export class Controls {
     this._pauseButton.classList.remove('hidden');
     this._player.videoTag.play();
     this._player.playing = true;
+    this._player.userActivity = true;
     this.hideOverlayPauseLayout();
   }
 
@@ -98,6 +106,7 @@ export class Controls {
     this._pauseButton.classList.add('hidden');
     this._player.videoTag.pause();
     this._player.playing = false;
+    this.showControls();
     this.showOverlayPauseLayout();
   }
 
@@ -161,12 +170,34 @@ export class Controls {
     }
   }
 
+  /**
+   * Hide controls
+   */
+  public hideControls() {
+    this._controlsContainer.classList.add('hidden');
+    this._player.containerTag.classList.add('hide-cursor');
+  }
+
+  /**
+   * Show controls
+   */
+  public showControls() {
+    this._controlsContainer.classList.remove('hidden');
+    this._player.containerTag.classList.remove('hide-cursor');
+  }
+
+  /**
+   * Change volume and set the current level
+   */
   public changeVolume() {
     const scaleTo = +this._volume.value / 100;
     this._player.videoTag.volume = scaleTo;
     this._volumeLevel.setAttribute('style', `transform: scaleY(${scaleTo}) rotate(-90deg)`);
   }
 
+  /**
+   * Show volume scale on hover
+   */
   private showVolumeScale() {
     if (!this._player.muted) {
       this._volume.hidden = false;
@@ -174,6 +205,9 @@ export class Controls {
     }
   }
 
+  /**
+   * Hide volume scale
+   */
   private hideVolumeScale() {
     this._volume.hidden = true;
     this._volumeLevel.hidden = true;

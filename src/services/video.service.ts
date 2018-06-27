@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 
 import * as Hls from 'hls.js';
 
@@ -15,6 +15,7 @@ export class VideoService {
   public containerTag: any;
   public videoTag: HTMLVideoElement;
   private _videoEventsHandler: EventListener;
+  private _videoControlsHandler: EventListener;
 
   // Time
   private _currentTime: HTMLElement;
@@ -29,11 +30,17 @@ export class VideoService {
   public playing = false;
   public isFullscreenMode = false;
   public muted = false;
+  public userActivity = false;
 
   private _hls: Hls;
 
-  constructor() {
+  // Intervals for checking user activity
+  private _inactivityInterval: any;
+  private _checkActivityInterval: any;
+
+  constructor(private _zone: NgZone) {
     this._videoEventsHandler = this.videoEventsHandler.bind(this);
+    this._videoControlsHandler = this.videoControlsHandler.bind(this);
   }
 
   get hls() {
@@ -64,7 +71,7 @@ export class VideoService {
       this._hls.attachMedia(this.videoTag);
 
       ///
-      this.controls = new Controls(this);
+      this.controls = new Controls(this, this._zone);
       this.scales = new Scales(this);
       ///
 
@@ -76,6 +83,7 @@ export class VideoService {
 
     this.initElements();
     this.events();
+    this.checkUserActivity();
 
     if (this.config.autoPlay) {
       this.controls.play();
@@ -86,8 +94,8 @@ export class VideoService {
    * Init custom design elements
    */
   public initElements() {
-    this._currentTime   = this.containerTag.querySelector('#current-time') as HTMLElement;
-    this._duration      = this.containerTag.querySelector('#duration') as HTMLElement;
+    this._currentTime = this.containerTag.querySelector('#current-time') as HTMLElement;
+    this._duration    = this.containerTag.querySelector('#duration') as HTMLElement;
   }
 
   /**
@@ -113,6 +121,10 @@ export class VideoService {
     this.videoTag.addEventListener('loadedmetadata', this._videoEventsHandler);
     this.videoTag.addEventListener('loadeddata', this._videoEventsHandler);
     this.videoTag.addEventListener('durationchange', this._videoEventsHandler);
+
+    this._zone.runOutsideAngular(() => {
+      this.containerTag.addEventListener('mousemove', this._videoControlsHandler);
+    });
   }
 
   /**
@@ -147,6 +159,10 @@ export class VideoService {
     this.videoTag.removeEventListener('loadedmetadata', this._videoEventsHandler);
     this.videoTag.removeEventListener('loadeddata', this._videoEventsHandler);
     this.videoTag.removeEventListener('durationchange', this._videoEventsHandler);
+
+    this.containerTag.removeEventListener('mousemove', this._videoControlsHandler);
+    clearInterval(this._checkActivityInterval);
+    clearTimeout(this._inactivityInterval);
   }
 
   /**
@@ -201,5 +217,41 @@ export class VideoService {
         }
       } break;
     }
+  }
+
+  /**
+   * Detect user activity and show controls;
+   */
+  private videoControlsHandler() {
+    this.userActivity = true;
+    this.controls.showControls();
+  }
+
+  /**
+   *  Set a variable that can be picked up by a javascript interval that’s running at a controlled pace.
+   *  We’re using a technique written about by John Resig. (https://johnresig.com/blog/learning-from-twitter/)
+   */
+  private checkUserActivity() {
+    this._checkActivityInterval = setInterval(() => {
+
+      if (this.videoTag.paused) {
+        clearTimeout(this._inactivityInterval);
+      }
+
+      // Check to see if the mouse has been moved
+      if (this.userActivity && !this.videoTag.paused) {
+        this.userActivity = false;
+        clearTimeout(this._inactivityInterval);
+
+        this._inactivityInterval = setTimeout(() => {
+          // Protect against the case where the inactivity timeout can trigger
+          // before the next user activity is picked up  by the activityCheck loop.
+          if (!this.userActivity) {
+            this.controls.hideControls();
+          }
+        }, 3000);
+
+      }
+    }, 250);
   }
 }
