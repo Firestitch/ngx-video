@@ -228,8 +228,8 @@ export class VideoService {
   }
 
   /**
-   *  Set a variable that can be picked up by a javascript interval that’s running at a controlled pace.
-   *  We’re using a technique written about by John Resig. (https://johnresig.com/blog/learning-from-twitter/)
+   *  Set a variable that can be picked up by a js interval that’s running at a controlled pace.
+   *  Using a technique written about by John Resig. (https://johnresig.com/blog/learning-from-twitter/)
    */
   private checkUserActivity() {
     this._checkActivityInterval = setInterval(() => {

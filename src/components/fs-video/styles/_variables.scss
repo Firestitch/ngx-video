@@ -1,3 +1,10 @@
+// devices sizes
+$phone-width-max: 600px;
+$tablet-width-min: 768px;
+$tablet-width-max: 991.98px;
+$desktop-width-min: 992px;
+
+// progress bar settings
 $progress-height: 2px;
 $h-progress-height: $progress-height / 2;
 $progress-pointer-height: $progress-height * 5;
