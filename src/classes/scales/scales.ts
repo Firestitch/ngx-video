@@ -81,6 +81,7 @@ export class Scales {
     const target = currentTimePos / 100 * this._duration;
     this._player.videoTag.currentTime = target;
 
+    this._player.userActivity = true;
     this.showTimeLabel();
   }
 

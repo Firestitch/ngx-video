@@ -17,11 +17,11 @@ export class Controls {
   private _volume: HTMLInputElement;
 
   private _overlayPauseLayout: HTMLElement;
-  private _overlayPauseButton: HTMLElement;
 
   // Handlers
   private _onPlayHandler: EventListener;
   private _onPauseHandler: EventListener;
+  private _switchPlayHandler: EventListener;
   private _switchMuteHandler: EventListener;
   private _switchFullscreenHandler: EventListener;
   private _fullscreenChangeHandler: EventListener;
@@ -45,7 +45,6 @@ export class Controls {
     this._controlsContainer = this._player.containerTag.querySelector('#controls');
 
     this._overlayPauseLayout = this._player.containerTag.querySelector('#overlay');
-    this._overlayPauseButton = this._player.containerTag.querySelector('#overlay .pause');
 
     this.changeVolume(); // set default volume level
 
@@ -58,6 +57,7 @@ export class Controls {
   private events() {
     this._onPlayHandler = this.play.bind(this);
     this._onPauseHandler = this.pause.bind(this);
+    this._switchPlayHandler = this.switchPlay.bind(this);
     this._switchMuteHandler = this.switchMute.bind(this);
     this._switchFullscreenHandler = this.switchFullscreen.bind(this);
     this._fullscreenChangeHandler = this.fullscreenChangeHandler.bind(this);
@@ -72,7 +72,7 @@ export class Controls {
     this._unmuteButton.addEventListener('click', this._switchMuteHandler);
     this._fullscreenOn.addEventListener('click', this._switchFullscreenHandler);
     this._fullscreenOff.addEventListener('click', this._switchFullscreenHandler);
-    this._overlayPauseButton.addEventListener('click', this._onPlayHandler);
+    this._overlayPauseLayout.addEventListener('click', this._switchPlayHandler);
     this._volume.addEventListener('input', this._volumeChangeHandler);
 
     this._zone.runOutsideAngular(() => {
@@ -176,6 +176,7 @@ export class Controls {
   public hideControls() {
     this._controlsContainer.classList.add('hidden');
     this._player.containerTag.classList.add('hide-cursor');
+    this._overlayPauseLayout.classList.add('hidden');
   }
 
   /**
@@ -184,6 +185,7 @@ export class Controls {
   public showControls() {
     this._controlsContainer.classList.remove('hidden');
     this._player.containerTag.classList.remove('hide-cursor');
+    this._overlayPauseLayout.classList.remove('hidden');
   }
 
   /**
@@ -193,6 +195,13 @@ export class Controls {
     const scaleTo = +this._volume.value / 100;
     this._player.videoTag.volume = scaleTo;
     this._volumeLevel.setAttribute('style', `transform: scaleY(${scaleTo}) rotate(-90deg)`);
+  }
+
+  /**
+   * Switch play or pause
+   */
+  public switchPlay() {
+   this._player.playing ? this.pause() : this.play();
   }
 
   /**
@@ -217,14 +226,15 @@ export class Controls {
    * Show overlay layout with pause icon
    */
   private showOverlayPauseLayout() {
-    this._overlayPauseLayout.classList.remove('hidden');
+    this._overlayPauseLayout.classList.remove('playing');
+
   }
 
   /**
    * Hide overlay layout with pause icon
    */
   private hideOverlayPauseLayout() {
-    this._overlayPauseLayout.classList.add('hidden');
+    this._overlayPauseLayout.classList.add('playing');
   }
 
   /**
@@ -239,7 +249,7 @@ export class Controls {
     this._unmuteButton.removeEventListener('click', this._switchMuteHandler);
     this._fullscreenOn.removeEventListener('click', this._switchFullscreenHandler);
     this._fullscreenOff.removeEventListener('click', this._switchFullscreenHandler);
-    this._overlayPauseButton.removeEventListener('click', this._onPlayHandler);
+    this._overlayPauseLayout.removeEventListener('click', this._switchPlayHandler);
     this._volumeContainer.removeEventListener('mouseover', this._showVolumeHandler);
     this._volumeContainer.removeEventListener('mouseout', this._hideVolumeHandler);
     this._volume.removeEventListener('input', this._volumeChangeHandler);

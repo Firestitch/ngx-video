@@ -7,14 +7,25 @@
   align-items: center;
   justify-content: center;
 
-  .pause {
+
+  &.playing {
+    .play {
+      display: none;
+    }
+
+    .pause {
+      display: none;
+    }
+  }
+
+  .play, .pause {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.6);
 
     .icon {
-      width: 65px;
+      width: 63px;
       height: 100%;
       cursor: pointer;
       background: none;
@@ -29,7 +40,21 @@
     }
   }
 
+  .pause {
+    display: none;
+  }
+
   &.hidden {
     display: none;
+  }
+}
+
+@include phone {
+  .overlay {
+    &.playing {
+      .pause {
+        display: block;
+      }
+    }
   }
 }
