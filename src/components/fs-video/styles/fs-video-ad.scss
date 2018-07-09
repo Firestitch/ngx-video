@@ -1,0 +1,93 @@
+@import './variables';
+
+.ads {
+  color: white;
+  font-family: sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+
+  .ad-button {
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 19px;
+    padding: 10px;
+    width: auto;
+    position: absolute;
+    bottom: 50px;
+    color: white;
+  }
+
+  #ad-link {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  #ad-can-skip {
+    right: 0;
+    width: 100px;
+    font-size: 11px;
+  }
+
+  #ad-skip {
+    right: 0;
+    cursor: pointer;
+  }
+
+}
+
+.ad-slider {
+  >input[type=range] {
+    &::-webkit-slider-thumb {
+      display: none;
+    }
+
+    &::-moz-range-thumb {
+      display: none;
+    }
+
+    &::-ms-thumb {
+      display: none;
+    }
+  }
+}
+
+.ad-progress {
+  background: $ad-color !important;
+}
+
+#ad-start-soon {
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 19px;
+  padding: 10px;
+  width: auto;
+  position: absolute;
+  bottom: 50px;
+  color: white;
+  font-family: sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+
+  #spinner {
+    display: inline-block;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+::ng-deep {
+  .ad-stop-points {
+    .ad-point {
+      width: $progress-pointer-height - 2;
+      height: $progress-pointer-height - 2;
+      background-color: $ad-color;
+      position: absolute;
+      border-radius: 50%;
+      top: calc(50% - #{($progress-pointer-height - 2) / 2});
+    }
+  }
+}

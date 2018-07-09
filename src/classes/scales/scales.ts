@@ -2,8 +2,9 @@ import * as Hls from 'hls.js';
 import { fractionOfNumber, scaleX } from '../../helpers';
 
 import { BufferInterval } from './buffer-interval';
-import { VideoService } from '../../services';
 import { secondsHumanize } from '../../helpers/seconds-humanize';
+import { NgZone } from '@angular/core';
+import { Video } from '../video';
 
 export class Scales {
 
@@ -23,17 +24,25 @@ export class Scales {
   private changeCurrentTimeByDraggingListener;
   private changeCurrentTimeByDraggingEndListener;
 
-  constructor(private _player: VideoService) {
+  constructor(private _player: Video,
+              private _zone: NgZone,
+              private _isDraggable = true) {
     this._onFragBufferedCallback = this.onFragBuffered.bind(this);
 
-    this._progressContainerElem = this._player.containerTag.querySelector('#progress');
-    this._playProgressElem = this._player.containerTag.querySelector('#play-progress');
-    this._buffersContainerElem = this._player.containerTag.querySelector('#buffers');
-    this._movingCurrentTimeLabel = this._player.containerTag.querySelector('#play-current-time-label');
-    this._durationElem = this._player.containerTag.querySelector('#duration-bar input');
+    this._progressContainerElem = this._player.containerTag.querySelector(`#progress`);
+    this._playProgressElem = this._player.containerTag.querySelector(`#play-progress`);
+    this._buffersContainerElem = this._player.containerTag.querySelector(`#buffers`);
+    this._movingCurrentTimeLabel = this._player.containerTag.querySelector(`#play-current-time-label`);
+    this._durationElem = this._player.containerTag.querySelector(`#duration-bar input`);
+
+    // !this._isDraggable && this._durationElem.setAttribute('disabled', 'true');
 
     this.subscribe();
     this.events();
+  }
+
+  get progressContainerElem() {
+    return this._progressContainerElem;
   }
 
   /**
@@ -63,6 +72,11 @@ export class Scales {
    * Subscribe to video tag events
    */
   private events() {
+    // no subscription if we don't need drag
+    if (!this._isDraggable) {
+      return;
+    }
+
     this.changeCurrentTimeByDraggingListener = this.changeCurrentTime.bind(this);
     this.changeCurrentTimeByDraggingEndListener = this.hideTimeLabel.bind(this);
     this._durationElem.addEventListener('input', this.changeCurrentTimeByDraggingListener);

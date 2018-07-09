@@ -2,7 +2,6 @@ import { AfterContentInit, Component, ElementRef, Input, OnDestroy, OnInit, View
 import { VideoService } from '../../services';
 import { FsVideoConfig } from '../../interfaces';
 
-
 @Component({
   selector: 'fs-video',
   templateUrl: 'fs-video.component.html',
@@ -20,15 +19,11 @@ export class FsVideoComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   get width() {
-    return this._video.config.width || 'auto';
+    return this.config.width || 'auto';
   }
 
   get height() {
-    return this._video.config.height || 'auto';
-  }
-
-  get controls() {
-    return this._video.config.controls;
+    return this.config.height || 'auto';
   }
 
   public ngOnInit() {

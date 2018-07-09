@@ -9,6 +9,8 @@ export class VideoConfig extends Model {
   @Alias() public source: string;
   @Alias() public autoPlay: boolean;
   @Alias() public startLevel: number;
+  @Alias() public draggable: boolean;
+  @Alias() public hideControls: boolean;
 
   public hlsConfig = {
     capLevelToPlayerSize: true

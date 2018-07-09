@@ -1,13 +1,15 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FsVideoComponent } from './components';
+import { FsVideoComponent, FsAdvertisingComponent } from './components';
 import { VideoService } from './services';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 
 @NgModule({
   imports: [
     CommonModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     FsVideoComponent,
@@ -16,6 +18,7 @@ import { VideoService } from './services';
   ],
   declarations: [
     FsVideoComponent,
+    FsAdvertisingComponent,
   ],
   providers: [
     VideoService

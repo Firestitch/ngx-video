@@ -1,3 +1,5 @@
+import { FsVideoAdvertising } from './advertising.interface';
+
 export interface FsVideoConfig {
   width?: string;
   height?: string;
@@ -5,4 +7,5 @@ export interface FsVideoConfig {
   source?: string;
   autoPlay?: boolean;
   startLevel?: boolean;
+  ads?: FsVideoAdvertising[];
 }

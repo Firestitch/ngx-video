@@ -23,6 +23,7 @@
     height: 60px;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
 
     .icon {
       width: 63px;
@@ -32,6 +33,10 @@
       border: none;
       fill: #fff;
       fill-opacity: .9;
+
+      &:first-child {
+        margin-right: 3px;
+      }
 
       svg {
         width: 100%;
@@ -53,7 +58,7 @@
   .overlay {
     &.playing {
       .pause {
-        display: block;
+        display: flex;
       }
     }
   }

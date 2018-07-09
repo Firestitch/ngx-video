@@ -1,26 +1,22 @@
-@import 'styles/fs-video-progress';
-@import 'styles/fs-video-controls';
-@import 'styles/fs-video-fullscreen';
-@import 'styles/fs-overlay';
-@import 'styles/fs-video-slider';
-@import 'styles/fs-video-ad';
+@import '../styles/fs-video-progress';
+@import '../styles/fs-video-controls';
+@import '../styles/fs-video-fullscreen';
+@import '../styles/fs-video-slider';
+@import '../styles/fs-video-ad';
 
 .container {
   display: inline-block;
   position: relative;
   z-index: 2147483647;
 
-  .hidden {
+  &.hidden {
     display: none;
   }
+
 
   video::-webkit-media-controls, video::-webkit-media-controls-overlay-enclosure {
     display: none !important;
   }
-}
-
-.hidden {
-  display: none;
 }
 
 @include phone {
@@ -31,4 +27,3 @@
     }
   }
 }
-
