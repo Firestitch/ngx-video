@@ -190,7 +190,7 @@ export class AdControl {
     this._skipSeconds.innerText = '-';
     this._player.containerTag.classList.remove('hidden');
     this._adPlayer.containerTag.classList.add('hidden');
-    // this._adPlayer.controls.pause();
+    this._adPlayer.controls.pause();
     this._player.controls.play();
   }
 
