@@ -20,7 +20,7 @@ export class VideoPreRollAdSkipExampleComponent implements OnInit {
       ads: [
         {
           type: 'pre',
-          source: 'http://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8',
+          source: 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
           url: 'http://shopforshoes.com',
           label: 'Visit shopforshoes.com',
           skip: 5
