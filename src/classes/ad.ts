@@ -226,7 +226,7 @@ export class AdControl {
    * Count down 'Start soon'
    */
   private startingSoonCountDown() {
-    if (!this._service.player.playing) { return; } // if main video is paused
+    if (!this._player.playing) { return; } // if main video is paused
 
     if (this._counter === 0) {
       clearInterval(this._startingSoonInterval);
