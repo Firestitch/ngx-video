@@ -9,7 +9,12 @@ import { FsExampleModule } from '@firestitch/example';
 
 import { FsVideoModule } from '../src';
 import { AppMaterialModule } from './app/material.module';
-import { VideoExampleComponent } from './app/components/video-example/video-example.component';
+import {
+  VideoExampleComponent,
+  VideoPostRollAdExampleComponent,
+  VideoMidRollAdExampleComponent,
+  VideoPreRollAdExampleComponent,
+  VideoPreRollAdSkipExampleComponent } from './app/components/';
 
 
 @NgModule({
@@ -27,6 +32,10 @@ import { VideoExampleComponent } from './app/components/video-example/video-exam
   declarations: [
     AppComponent,
     VideoExampleComponent,
+    VideoPostRollAdExampleComponent,
+    VideoMidRollAdExampleComponent,
+    VideoPreRollAdExampleComponent,
+    VideoPreRollAdSkipExampleComponent,
   ],
   providers: [
   ],
