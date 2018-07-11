@@ -8,7 +8,7 @@
     top: 0;
     display: flex;
     flex-grow: 1;
-    margin: 0 10px;
+    margin: 0 5px;
 
     #total-duration {
       position: absolute;
@@ -27,6 +27,7 @@
       height: 100%;
       background: #fff;
       transform-origin: 0 0;
+      border-radius: 10px;
     }
 
     #buffers {

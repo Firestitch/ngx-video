@@ -13,9 +13,11 @@
       <span> Skip Ad </span>
     </div>
     <div class="ad-button hidden" id="ad-can-skip">
-      <span> You can skip this Ad in </span>
-      <span id="ad-can-skip-seconds"> - </span>
-      <span> second </span>
+      <div>
+        <span> You can skip this Ad in </span>
+        <span id="ad-can-skip-seconds"> - </span>
+        <span> second </span>
+      </div>
     </div>
   </div>
   <div class="controls" id="controls">
@@ -25,7 +27,7 @@
       </div>
     </div>
     <div class="progress" id="progress">
-      <div id="buffers"></div>
+      <div id="buffers" class="ad-buffers"></div>
       <div id="play-progress" class="ad-progress"></div>
       <div id="duration-bar" class="ad-slider">
         <input type="range" value="0">

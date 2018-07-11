@@ -8,12 +8,14 @@
 
   .ad-button {
     background-color: rgba(0, 0, 0, 0.3);
-    height: 19px;
-    padding: 10px;
+    height: 35px;
+    padding: 0 10px;
     width: auto;
     position: absolute;
     bottom: 50px;
     color: white;
+    display: flex;
+    align-items: center;
   }
 
   #ad-link {
@@ -36,6 +38,10 @@
     cursor: pointer;
   }
 
+  .hidden {
+    display: none;
+  }
+
 }
 
 .ad-slider {
@@ -56,6 +62,12 @@
 
 .ad-progress {
   background: $ad-color !important;
+}
+
+.ad-buffers {
+  .buffered-part {
+    display: none !important;
+  }
 }
 
 #ad-start-soon {
@@ -82,12 +94,13 @@
 ::ng-deep {
   .ad-stop-points {
     .ad-point {
-      width: $progress-pointer-height - 2;
-      height: $progress-pointer-height - 2;
+      width: $progress-pointer-height;
+      height: $progress-pointer-height;
       background-color: $ad-color;
       position: absolute;
       border-radius: 50%;
-      top: calc(50% - #{($progress-pointer-height - 2) / 2});
+      top: calc(50% - #{$progress-pointer-height / 2});
+      z-index: 2;
     }
   }
 }

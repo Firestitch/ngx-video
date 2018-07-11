@@ -9,6 +9,7 @@ input[type=range] {
   background: transparent;
   margin: 2px 0;
   height: 2px;
+  z-index: 4;
 
   &:focus {
     outline: none;
@@ -39,7 +40,7 @@ input[type=range] {
     background-color: #fff;
     cursor: pointer;
     -webkit-appearance: none;
-    margin-top: -$progress-height * 2; // for chrome
+    margin-top: -$progress-pointer-height / 2 + $progress-height / 2; // for chrome
   }
 
   &:focus::-webkit-slider-runnable-track {

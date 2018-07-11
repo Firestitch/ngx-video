@@ -210,8 +210,8 @@ export class Controls {
    */
   private showVolumeScale() {
     if (!this._player.muted) {
-      this._volume.hidden = false;
-      this._volumeLevel.hidden = false;
+      this._volumeContainer.hidden = false;
+      this.switchVolume();
     }
   }
 
@@ -219,8 +219,16 @@ export class Controls {
    * Hide volume scale
    */
   private hideVolumeScale() {
-    this._volume.hidden = true;
-    this._volumeLevel.hidden = true;
+    this._volumeContainer.hidden = true;
+    this.switchVolume();
+  }
+
+  /**
+   * Switch volume scale
+   */
+  private switchVolume() {
+    this._volume.hidden = this._volumeContainer.hidden;
+    this._volumeLevel.hidden = this._volumeContainer.hidden;
   }
 
   /**
