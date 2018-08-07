@@ -7,14 +7,18 @@ import { FsVideoConfig } from '../../../../src/interfaces/';
 })
 export class VideoPreRollAdSkipExampleComponent implements OnInit {
   public config: FsVideoConfig;
+  public enabled = false;
 
   constructor() {
 
   }
 
+  toggle() {
+    this.enabled = !this.enabled;
+  }
+
   public ngOnInit() {
     this.config = {
-      width: '500px',
       source: 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8',
       autoPlay: false,
       ads: [

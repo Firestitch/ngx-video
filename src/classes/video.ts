@@ -65,8 +65,7 @@ export class Video {
 
 
     if (Hls.isSupported()) {
-      this._hls.loadSource(this.config.source);
-      this._hls.attachMedia(this.videoTag);
+      this.updateSource(this.config.source);
 
       ///
       this.controls = new Controls(this, this._zone, this.config.hideControls);
@@ -142,8 +141,13 @@ export class Video {
     this._hls.detachMedia();
     this._hls.destroy();
 
-    this.controls.destroy();
-    this.scales.destroy();
+    if (this.controls) {
+      this.controls.destroy();
+    }
+
+    if (this.scales) {
+      this.scales.destroy();
+    }
 
     this.controls = null;
     this.scales = null;
@@ -203,8 +207,17 @@ export class Video {
       case 'canplaythrough':
       case 'ended':
       case 'seeking':
-      case 'seeked':
-      case 'play':
+      case 'seeked': {
+        break;
+      }
+      case 'play': {
+
+        if (!this.config.hlsConfig.autoStartLoad) {
+          this._hls.startLoad();
+        }
+
+        break;
+      }
       case 'playing': {
         this._currentTime.innerText = secondsHumanize(this.videoTag.currentTime);
       } break;

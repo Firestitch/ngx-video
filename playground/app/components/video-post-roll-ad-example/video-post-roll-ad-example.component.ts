@@ -14,7 +14,6 @@ export class VideoPostRollAdExampleComponent implements OnInit {
 
   public ngOnInit() {
     this.config = {
-      width: '500px',
       source: 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8',
       autoPlay: false,
       ads: [

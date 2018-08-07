@@ -6,9 +6,15 @@
 @import 'styles/fs-video-ad';
 
 .container {
-  display: inline-block;
+  display: block;
   position: relative;
   z-index: 2147483647;
+  background: #000000;
+
+  video {
+    display: block;
+    width: 100%;
+  }
 
   .hidden {
     display: none;

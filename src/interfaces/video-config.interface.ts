@@ -8,4 +8,5 @@ export interface FsVideoConfig {
   autoPlay?: boolean;
   startLevel?: boolean;
   ads?: FsVideoAdvertising[];
+  hlsConfig?: any;
 }

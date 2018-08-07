@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container" [style.width]="width" [style.height]="height">
   <div class="video-container">
-    <video #video tabindex="-1" [style.width]="width" [style.height]="height" controlslist="nodownload"></video>
+    <video #video tabindex="-1" controlslist="nodownload"></video>
   </div>
-  <div class="overlay hidden" id="overlay">
+  <div class="overlay" id="overlay">
     <div class="play">
       <div class="icon">
         <svg version="1.1" viewBox="0 0 36 36"><path d="M 12,26 18.5,22 18.5,14 12,10 z M 18.5,22 25,18 25,18 18.5,14 z"></path></svg>
@@ -23,7 +23,7 @@
         <svg version="1.1" viewBox="0 0 36 36"><path d="M 12,26 16,26 16,10 12,10 z M 21,26 25,26 25,10 21,10 z"></path></svg>
       </button>
       <div class="time-container">
-        <span id="current-time">-</span>
+        <span id="current-time"></span>
       </div>
     </div>
     <div class="progress" id="progress">
@@ -33,12 +33,12 @@
         <input type="range" value="0">
       </div>
       <div id="play-current-time-label" hidden>
-        <span> - </span>
+        <span></span>
       </div>
     </div>
     <div class="right-controls">
       <div class="time-container">
-        <span id="duration">-</span>
+        <span id="duration"></span>
       </div>
       <div class="volume-container" id="volume-container">
         <input type="range" id="volume" hidden>
