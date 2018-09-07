@@ -89,9 +89,8 @@ export class VideoService {
    * Unsubscribe and destroy everything
    */
   public destroy() {
-    this.player.destroy();
+    this.player && this.player.destroy();
     this.adPlayer && this.adPlayer.destroy();
     this.adController && this.adController.destroy();
   }
-
 }
