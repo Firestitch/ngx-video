@@ -14,6 +14,7 @@ export class Video {
   public videoTag: HTMLVideoElement;
   private _videoEventsHandler: EventListener;
   private _videoControlsHandler: EventListener;
+  private _leaveVideoHandler: EventListener;
 
   // Time
   private _currentTime: HTMLElement;
@@ -39,6 +40,7 @@ export class Video {
   constructor(private _zone: NgZone) {
     this._videoEventsHandler = this.videoEventsHandler.bind(this);
     this._videoControlsHandler = this.videoControlsHandler.bind(this);
+    this._leaveVideoHandler = this.videoLeaveHandler.bind(this);
   }
 
   get hls() {
@@ -121,6 +123,7 @@ export class Video {
 
     this._zone.runOutsideAngular(() => {
       this.containerTag.addEventListener('mousemove', this._videoControlsHandler);
+      this.containerTag.addEventListener('mouseout', this._leaveVideoHandler);
     });
   }
 
@@ -134,6 +137,37 @@ export class Video {
     this._hls.attachMedia(this.videoTag);
   }
 
+  /**
+   *  Set a variable that can be picked up by a js interval that’s running at a controlled pace.
+   *  Using a technique written about by John Resig. (https://johnresig.com/blog/learning-from-twitter/)
+   */
+  public checkUserActivity() {
+    this._checkActivityInterval = setInterval(() => {
+      if (this.videoTag.paused) {
+        clearTimeout(this._inactivityInterval);
+      }
+
+      // Check to see if the mouse has been moved
+      if (this.userActivity && !this.videoTag.paused) {
+        this.userActivity = false;
+        clearTimeout(this._inactivityInterval);
+
+        this._inactivityInterval = setTimeout(() => {
+          // Protect against the case where the inactivity timeout can trigger
+          // before the next user activity is picked up  by the activityCheck loop.
+          if (!this.userActivity) {
+            this.controls.hideControls();
+          }
+        }, 3000);
+
+      }
+    }, 250);
+  }
+
+  public stopCheckingUserActivity() {
+    clearInterval(this._checkActivityInterval);
+    clearTimeout(this._inactivityInterval);
+  }
   /**
    * Unsubscribe and destroy everything
    */
@@ -164,8 +198,8 @@ export class Video {
     this.videoTag.removeEventListener('durationchange', this._videoEventsHandler);
 
     this.containerTag.removeEventListener('mousemove', this._videoControlsHandler);
-    clearInterval(this._checkActivityInterval);
-    clearTimeout(this._inactivityInterval);
+    this.containerTag.removeEventListener('mouseout', this._leaveVideoHandler);
+    this.stopCheckingUserActivity();
   }
 
   /**
@@ -240,30 +274,11 @@ export class Video {
   }
 
   /**
-   *  Set a variable that can be picked up by a js interval that’s running at a controlled pace.
-   *  Using a technique written about by John Resig. (https://johnresig.com/blog/learning-from-twitter/)
+   * Detect when user isn't on player and hide controls
    */
-  private checkUserActivity() {
-    this._checkActivityInterval = setInterval(() => {
-
-      if (this.videoTag.paused) {
-        clearTimeout(this._inactivityInterval);
-      }
-
-      // Check to see if the mouse has been moved
-      if (this.userActivity && !this.videoTag.paused) {
-        this.userActivity = false;
-        clearTimeout(this._inactivityInterval);
-
-        this._inactivityInterval = setTimeout(() => {
-          // Protect against the case where the inactivity timeout can trigger
-          // before the next user activity is picked up  by the activityCheck loop.
-          if (!this.userActivity) {
-            this.controls.hideControls();
-          }
-        }, 3000);
-
-      }
-    }, 250);
+  private videoLeaveHandler(event) {
+    if (this.playing) {
+      this.controls.hideControls();
+    }
   }
 }

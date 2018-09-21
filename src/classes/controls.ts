@@ -29,6 +29,9 @@ export class Controls {
   private _showVolumeHandler: EventListener;
   private _hideVolumeHandler: EventListener;
 
+  private _showControlsHandler: EventListener;
+  private _hideControlsHandler: EventListener;
+
 
   constructor(private _player: Video,
               private _zone: NgZone,
@@ -65,6 +68,8 @@ export class Controls {
     this._volumeChangeHandler = this.changeVolume.bind(this);
     this._showVolumeHandler = this.showVolumeScale.bind(this);
     this._hideVolumeHandler = this.hideVolumeScale.bind(this);
+    this._showControlsHandler = this.hoverShowControls.bind(this);
+    this._hideControlsHandler = this.checkUserActivity.bind(this);
 
     // Other events
     this._playButton && this._playButton.addEventListener('click', this._onPlayHandler);
@@ -81,6 +86,8 @@ export class Controls {
       this._muteButton && this._muteButton.addEventListener('mouseout', this._hideVolumeHandler);
       this._volumeContainer && this._volumeContainer.addEventListener('mouseover', this._showVolumeHandler);
       this._volumeContainer && this._volumeContainer.addEventListener('mouseout', this._hideVolumeHandler);
+      this._controlsContainer && this._controlsContainer.addEventListener('mouseover', this._showControlsHandler);
+      this._controlsContainer && this._controlsContainer.addEventListener('mouseout', this._hideControlsHandler);
     });
 
     // Full screen
@@ -97,6 +104,14 @@ export class Controls {
     this._player.playing = true;
     this._player.userActivity = true;
     this.hideOverlayPauseLayout();
+  }
+
+  public hoverShowControls() {
+    this._player.stopCheckingUserActivity();
+  }
+
+  public checkUserActivity() {
+    this._player.checkUserActivity();
   }
 
   /**
@@ -261,6 +276,8 @@ export class Controls {
     this._volumeContainer && this._volumeContainer.removeEventListener('mouseover', this._showVolumeHandler);
     this._volumeContainer && this._volumeContainer.removeEventListener('mouseout', this._hideVolumeHandler);
     this._volume && this._volume.removeEventListener('input', this._volumeChangeHandler);
+    this._controlsContainer && this._controlsContainer.removeEventListener('mouseover', this._showControlsHandler);
+    this._controlsContainer && this._controlsContainer.removeEventListener('mouseout', this._hideControlsHandler);
 
     this._player.containerTag.removeEventListener(FullscreenApi.fullscreenchange, this._fullscreenChangeHandler);
   }
