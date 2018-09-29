@@ -1,6 +1,6 @@
-<div class="container hidden" id="advertising">
+<div class="container hidden" id="advertising" [style.width]="width" [style.height]="height">
   <div class="video-container">
-    <video #adVideo id="ad-video" tabindex="-1" [style.width]="width" [style.height]="height" controlslist="nodownload"></video>
+    <video #adVideo id="ad-video" tabindex="-1" controlslist="nodownload"></video>
   </div>
   <div class="ads" id="ads-buttons">
     <div class="ad-button hidden" id="ad-link-container">

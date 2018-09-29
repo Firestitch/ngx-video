@@ -9,6 +9,12 @@
   position: relative;
   z-index: 2147483647;
 
+  video {
+    display: block;
+    width: 100%;
+  }
+
+
   &.hidden {
     display: none;
   }
