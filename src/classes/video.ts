@@ -53,6 +53,11 @@ export class Video {
    */
   public initConfig(config: VideoConfig) {
     this.config = new VideoConfig(config);
+    // buffering experiments
+    // this.config.hlsConfig.maxMaxBufferLength = 1;
+    // this.config.hlsConfig.maxBufferLength = 1;
+    // this.config.hlsConfig.maxBufferSize = 1;
+    // this.config.hlsConfig.autoStartLoad = true;
     this._hls = new Hls(this.config.hlsConfig);
   }
 
@@ -64,15 +69,13 @@ export class Video {
   public initPlayer(rootElement, targetElement) {
     this.containerTag = rootElement.nativeElement.querySelector('.container');
     this.videoTag = targetElement.nativeElement;
-
+    ///
+    this.controls = new Controls(this, this._zone, this.config.hideControls);
+    this.scales = new Scales(this, this._zone, this.config.draggable);
+    ///
 
     if (Hls.isSupported()) {
       this.updateSource(this.config.source);
-
-      ///
-      this.controls = new Controls(this, this._zone, this.config.hideControls);
-      this.scales = new Scales(this, this._zone, this.config.draggable);
-      ///
 
       this._hls.on(Hls.Events.MANIFEST_PARSED, this.onManifestParsed.bind(this));
       this._hls.on(Hls.Events.ERROR, this.onError.bind(this));

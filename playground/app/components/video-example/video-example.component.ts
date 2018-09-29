@@ -10,7 +10,7 @@ export class VideoExampleComponent implements OnInit {
 
   public ngOnInit() {
     this.config = {
-      source: 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8',
+      source: 'https://firestitch-dev.s3.amazonaws.com/pub/media/7c0022618812bec81d5c05853db18fa0_540.m3u8',
       autoPlay: false,
       hlsConfig: { autoStartLoad: false }
     };

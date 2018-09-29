@@ -19,7 +19,7 @@ export class VideoPostRollAdExampleComponent implements OnInit {
       ads: [
         {
           type: 'post',
-          source: 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
+          source: 'https://firestitch-dev.s3.amazonaws.com/pub/media/7c0022618812bec81d5c05853db18fa0_540.m3u8',
           url: 'http://shopforshoes.com',
           label: 'Visit shopforshoes.com',
         },
