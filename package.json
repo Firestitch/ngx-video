@@ -1,7 +1,7 @@
 {
   "name": "@firestitch/video",
   "description": "@firestitch/video",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/fs-video"
@@ -109,5 +109,8 @@
     "tsmodels": "^0.4.1",
     "hls.js": "^0.9.0",
     "lodash": "^4.17.10"
+  },
+  "dependencies": {
+    "node-dir": "^0.1.17"
   }
 }
