@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FsVideoConfig } from '../../../../src/interfaces/';
+import { FsVideoConfig } from '@firestitch/video';
 
 @Component({
   selector: 'video-pre-roll-ad-skip-example',
