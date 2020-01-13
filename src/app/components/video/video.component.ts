@@ -1,4 +1,12 @@
-import { AfterContentInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { VideoService } from '../../services/video.service';
 import { FsVideoConfig } from '../../interfaces/video-config.interface';
 
@@ -7,12 +15,13 @@ import { FsVideoConfig } from '../../interfaces/video-config.interface';
   templateUrl: 'video.component.html',
   styleUrls: [ 'video.component.scss' ],
   providers: [ VideoService, ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FsVideoComponent implements OnInit, AfterContentInit, OnDestroy {
+export class FsVideoComponent implements OnInit, OnDestroy {
 
   @Input() public config: FsVideoConfig;
 
-  @ViewChild('video') public videoTag: ElementRef;
+  @ViewChild('video', { static: true }) public videoTag: ElementRef;
 
   public buffers = [];
 
@@ -29,9 +38,6 @@ export class FsVideoComponent implements OnInit, AfterContentInit, OnDestroy {
 
   public ngOnInit() {
     this._video.initConfig(this.config);
-  }
-
-  public ngAfterContentInit() {
     this._video.initPlayer(this._el, this.videoTag);
   }
 

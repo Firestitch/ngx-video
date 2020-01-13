@@ -1,4 +1,12 @@
-import { Component, ElementRef, AfterContentInit, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  Input,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { VideoService } from '../../../services/video.service';
 import { FsVideoConfig } from '../../../interfaces/video-config.interface';
 
@@ -6,12 +14,13 @@ import { FsVideoConfig } from '../../../interfaces/video-config.interface';
 @Component({
   selector: 'fs-advertising',
   templateUrl: 'advertising.component.html',
-  styleUrls: [ 'advertising.component.scss' ]
+  styleUrls: [ 'advertising.component.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FsAdvertisingComponent implements OnInit, AfterContentInit, OnDestroy {
+export class FsAdvertisingComponent implements OnInit, OnDestroy {
   @Input() public config: FsVideoConfig;
 
-  @ViewChild('adVideo') public videoTag: ElementRef;
+  @ViewChild('adVideo', { static: true }) public videoTag: ElementRef;
 
   constructor(private _el: ElementRef, private _video: VideoService) {
   }
@@ -26,9 +35,6 @@ export class FsAdvertisingComponent implements OnInit, AfterContentInit, OnDestr
 
   public ngOnInit() {
     // this._video.initAdvertisingConfig(this.config);
-  }
-
-  public ngAfterContentInit() {
     this._video.initAdvertisingPlayer(this._el, this.videoTag);
   }
 
