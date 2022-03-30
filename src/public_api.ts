@@ -5,6 +5,10 @@
 // Modules
 export { FsVideoModule } from './app/fs-video.module';
 
+// Components
+export { FsVideoComponent } from './app/components/video/video.component';
+export { FsAdvertisingComponent } from './app/components/video/advertising/advertising.component';
+
 // Classes
 export { AdControl } from './app/classes/ad';
 export { Controls } from './app/classes/controls';
@@ -20,4 +24,3 @@ export { VideoConfig } from './app/models/video-config.model';
 // Interfaces
 export { FsVideoConfig } from './app/interfaces/video-config.interface';
 export { FsVideoAdvertising } from './app/interfaces/advertising.interface';
-

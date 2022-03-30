@@ -14,8 +14,6 @@ import { FsAdvertisingComponent } from './components/video/advertising/advertisi
   exports: [
     FsVideoComponent,
   ],
-  entryComponents: [
-  ],
   declarations: [
     FsVideoComponent,
     FsAdvertisingComponent,

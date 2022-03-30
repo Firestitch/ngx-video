@@ -1,4 +1,6 @@
+@use "sass:math";
 @import './variables';
+
 $bg: rgba(239, 239, 239, 0.4);
 
 input[type=range] {
@@ -40,7 +42,7 @@ input[type=range] {
     background-color: #fff;
     cursor: pointer;
     -webkit-appearance: none;
-    margin-top: -$progress-pointer-height / 2 + $progress-height / 2; // for chrome
+    margin-top: math.div(-$progress-pointer-height, 2) + math.div($progress-height, 2); // for chrome
   }
 
   &:focus::-webkit-slider-runnable-track {

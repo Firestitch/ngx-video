@@ -1,3 +1,4 @@
+@use "sass:math";
 @import './variables';
 
 .ads {
@@ -99,7 +100,7 @@
       background-color: $ad-color;
       position: absolute;
       border-radius: 50%;
-      top: calc(50% - #{$progress-pointer-height / 2});
+      top: calc(50% - #{math.div($progress-pointer-height, 2)});
       z-index: 2;
     }
   }
