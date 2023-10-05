@@ -27,7 +27,7 @@
     "serve": "cd node_modules/@firestitch/component-tools && npm run cli:serve"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~12.2.16",
+    "@angular-devkit/build-angular": "~16.2.5",
     "@angular-devkit/core": "^12.2.16",
     "@angular/animations": "^12.2.16",
     "@angular/cdk": "^12.2.13",
@@ -58,7 +58,7 @@
     "hls.js": "^0.13.2",
     "lodash": "^4.17.15",
     "lodash-es": "^4.17.21",
-    "ng-packagr": "^12.2.7",
+    "ng-packagr": "^16.2.3",
     "ngx-highlightjs": "^6.1.2",
     "ngx-toastr": "^14.2.2",
     "npm-run-all": "^4.1.5",
