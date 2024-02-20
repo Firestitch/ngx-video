@@ -18,29 +18,26 @@ import {
 
 
 @NgModule({
-  bootstrap: [ AppComponent ],
-  imports: [
-    BrowserModule,
-    FsVideoModule,
-    BrowserAnimationsModule,
-    AppMaterialModule,
-    FormsModule,
-    FsExampleModule.forRoot(),
-    ToastrModule.forRoot({ preventDuplicates: true }),
-    FsMessageModule.forRoot(),
-  ],
-  entryComponents: [
-  ],
-  declarations: [
-    AppComponent,
-    VideoExampleComponent,
-    VideoPostRollAdExampleComponent,
-    VideoMidRollAdExampleComponent,
-    VideoPreRollAdExampleComponent,
-    VideoPreRollAdSkipExampleComponent,
-  ],
-  providers: [
-  ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        FsVideoModule,
+        BrowserAnimationsModule,
+        AppMaterialModule,
+        FormsModule,
+        FsExampleModule.forRoot(),
+        ToastrModule.forRoot({ preventDuplicates: true }),
+        FsMessageModule.forRoot(),
+    ],
+    declarations: [
+        AppComponent,
+        VideoExampleComponent,
+        VideoPostRollAdExampleComponent,
+        VideoMidRollAdExampleComponent,
+        VideoPreRollAdExampleComponent,
+        VideoPreRollAdSkipExampleComponent,
+    ],
+    providers: []
 })
 export class PlaygroundModule {
 }
