@@ -1,31 +1,26 @@
-import { Alias, Model} from 'tsmodels';
-import { FsVideoConfig } from '../interfaces/video-config.interface';
 import { merge } from 'lodash';
+import { FsVideoConfig } from '../interfaces/video-config.interface';
 
-export class VideoConfig extends Model {
+export class VideoConfig {
 
-  @Alias() public width: string;
-  @Alias() public height: string;
-  @Alias() public controls: boolean;
-  @Alias() public source: string;
-  @Alias() public autoPlay: boolean;
-  @Alias() public startLevel: number;
-  @Alias() public draggable: boolean;
-  @Alias() public hideControls: boolean;
-  @Alias() public hlsConfig: any;
+  public width: string;
+  public height: string;
+  public controls: boolean;
+  public source: string;
+  public autoPlay: boolean;
+  public startLevel: number;
+  public draggable: boolean;
+  public hideControls: boolean;
+  public hlsConfig: any;
 
 
   constructor(config: FsVideoConfig | any = {}) {
-    super();
-    this._fromJSON(config);
     this.hlsConfig = merge({
          capLevelToPlayerSize: true
        }, config.hlsConfig || {});
   }
 
   public _fromJSON(config: FsVideoConfig) { // FIXME
-    super._fromJSON(config);
-
     if (config.controls === undefined || config.controls === null) {
       this.controls = true;
     }

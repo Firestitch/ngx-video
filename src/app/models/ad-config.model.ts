@@ -1,20 +1,17 @@
-import { Alias, Model } from 'tsmodels';
+
 import { FsVideoAdvertising } from '../interfaces/advertising.interface';
 
-export class AdvertisingConfig extends Model {
+export class AdvertisingConfig{
 
-  @Alias() public type: 'pre' | 'mid' | 'post';
-  @Alias() public source: string;
-  @Alias() public skip: number;
-  @Alias() public url: string;
-  @Alias() public label: string;
-  @Alias() public start: number;
-  @Alias() public played = false;
+  public type: 'pre' | 'mid' | 'post';
+  public source: string;
+  public skip: number;
+  public url: string;
+  public label: string;
+  public start: number;
+  public played = false;
 
 
   constructor(config: FsVideoAdvertising | any = {}) {
-    super();
-    super._fromJSON(config);
-
   }
 }
