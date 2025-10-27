@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FsVideoConfig } from '@firestitch/video';
+import { FsVideoComponent } from '../../../../src/app/components/video/video.component';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'video-pre-roll-ad-skip-example',
-  templateUrl: 'video-pre-roll-ad-skip-example.component.html'
+    selector: 'video-pre-roll-ad-skip-example',
+    templateUrl: 'video-pre-roll-ad-skip-example.component.html',
+    standalone: true,
+    imports: [FsVideoComponent, MatButton]
 })
 export class VideoPreRollAdSkipExampleComponent implements OnInit {
   public config: FsVideoConfig;

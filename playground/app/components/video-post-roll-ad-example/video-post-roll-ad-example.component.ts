@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FsVideoConfig } from '@firestitch/video';
+import { FsVideoComponent } from '../../../../src/app/components/video/video.component';
 
 @Component({
-  selector: 'video-post-roll-ad-example',
-  templateUrl: 'video-post-roll-ad-example.component.html'
+    selector: 'video-post-roll-ad-example',
+    templateUrl: 'video-post-roll-ad-example.component.html',
+    standalone: true,
+    imports: [FsVideoComponent]
 })
 export class VideoPostRollAdExampleComponent implements OnInit {
   public config: FsVideoConfig;

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FsVideoConfig } from '@firestitch/video';
+import { FsVideoComponent } from '../../../../src/app/components/video/video.component';
 
 @Component({
-  selector: 'video-mid-roll-ad-example',
-  templateUrl: 'video-mid-roll-ad-example.component.html'
+    selector: 'video-mid-roll-ad-example',
+    templateUrl: 'video-mid-roll-ad-example.component.html',
+    standalone: true,
+    imports: [FsVideoComponent]
 })
 export class VideoMidRollAdExampleComponent implements OnInit {
   public config: FsVideoConfig;

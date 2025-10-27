@@ -12,10 +12,11 @@ import { FsVideoConfig } from '../../../interfaces/video-config.interface';
 
 
 @Component({
-  selector: 'fs-advertising',
-  templateUrl: 'advertising.component.html',
-  styleUrls: [ 'advertising.component.scss' ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-advertising',
+    templateUrl: 'advertising.component.html',
+    styleUrls: ['advertising.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class FsAdvertisingComponent implements OnInit, OnDestroy {
   @Input() public config: FsVideoConfig;

@@ -3,7 +3,7 @@
  */
 
 // Modules
-export { FsVideoModule } from './app/fs-video.module';
+
 
 // Components
 export { FsVideoComponent } from './app/components/video/video.component';

@@ -9,13 +9,17 @@ import {
 } from '@angular/core';
 import { VideoService } from '../../services/video.service';
 import { FsVideoConfig } from '../../interfaces/video-config.interface';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { FsAdvertisingComponent } from './advertising/advertising.component';
 
 @Component({
-  selector: 'fs-video',
-  templateUrl: 'video.component.html',
-  styleUrls: [ 'video.component.scss' ],
-  providers: [ VideoService, ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-video',
+    templateUrl: 'video.component.html',
+    styleUrls: ['video.component.scss'],
+    providers: [VideoService,],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [MatProgressSpinner, FsAdvertisingComponent],
 })
 export class FsVideoComponent implements OnInit, OnDestroy {
 
