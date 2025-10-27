@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { VideoService } from '../../services/video.service';
 import { FsVideoConfig } from '../../interfaces/video-config.interface';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -22,15 +14,15 @@ import { FsAdvertisingComponent } from './advertising/advertising.component';
     imports: [MatProgressSpinner, FsAdvertisingComponent],
 })
 export class FsVideoComponent implements OnInit, OnDestroy {
+  private _el = inject(ElementRef);
+  private _video = inject(VideoService);
+
 
   @Input() public config: FsVideoConfig;
 
   @ViewChild('video', { static: true }) public videoTag: ElementRef;
 
   public buffers = [];
-
-  constructor(private _el: ElementRef, private _video: VideoService) {
-  }
 
   get width() {
     return this.config.width || 'auto';

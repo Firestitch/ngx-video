@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  Input,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, Input, ChangeDetectionStrategy, inject } from '@angular/core';
 import { VideoService } from '../../../services/video.service';
 import { FsVideoConfig } from '../../../interfaces/video-config.interface';
 
@@ -19,12 +11,12 @@ import { FsVideoConfig } from '../../../interfaces/video-config.interface';
     standalone: true,
 })
 export class FsAdvertisingComponent implements OnInit, OnDestroy {
+  private _el = inject(ElementRef);
+  private _video = inject(VideoService);
+
   @Input() public config: FsVideoConfig;
 
   @ViewChild('adVideo', { static: true }) public videoTag: ElementRef;
-
-  constructor(private _el: ElementRef, private _video: VideoService) {
-  }
 
   get width() {
     return this.config.width || 'auto';

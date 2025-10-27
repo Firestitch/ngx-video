@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 
 import { VideoConfig } from '../models/video-config.model';
 import { FsVideoConfig } from '../interfaces/video-config.interface';
@@ -10,6 +10,8 @@ import { FsVideoAdvertising } from '../interfaces/advertising.interface';
 
 @Injectable()
 export class VideoService {
+  private _zone = inject(NgZone);
+
 
   // Config and extra handlers
   public config: VideoConfig;
@@ -17,9 +19,6 @@ export class VideoService {
   public player: Video;
   public adPlayer: Video;
   public adController: AdControl;
-
-  constructor(private _zone: NgZone) {
-  }
 
 
   /**
