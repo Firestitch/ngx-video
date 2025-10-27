@@ -58,12 +58,16 @@
       </button>
     </div>
   </div>
-  <div class="hidden" id="ad-start-soon" *ngIf="config.ads">
-    <mat-spinner [diameter]="15" [color]="'accent'" id="spinner"></mat-spinner>
-    <span> Ad starting soon </span>
-  </div>
+  @if (config.ads) {
+    <div class="hidden" id="ad-start-soon">
+      <mat-spinner [diameter]="15" [color]="'accent'" id="spinner"></mat-spinner>
+      <span> Ad starting soon </span>
+    </div>
+  }
 </div>
 
-<div id="advertising-container" *ngIf="config.ads" >
-  <fs-advertising [config]="config"></fs-advertising>
-</div>
+@if (config.ads) {
+  <div id="advertising-container" >
+    <fs-advertising [config]="config"></fs-advertising>
+  </div>
+}

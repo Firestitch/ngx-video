@@ -1,3 +1,5 @@
-<fs-video [config]="config" *ngIf="enabled"></fs-video>
+@if (enabled) {
+  <fs-video [config]="config"></fs-video>
+}
 
 <button mat-raised-button color="primary" (click)="toggle()">{{ enabled ? 'Disable' : 'Enable' }}</button>
